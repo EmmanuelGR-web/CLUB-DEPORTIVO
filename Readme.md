@@ -1,4 +1,4 @@
-# Sports Club - Website
+# CLUB DEPORTIVO
 
 ## Integrantes
 - Emmanuel Gonzalez Rojas
