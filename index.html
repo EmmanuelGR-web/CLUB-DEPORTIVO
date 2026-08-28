@@ -3,55 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Club Deportivo</title>
-</head>
-<body>
-    <header>
-        <h1>Club Deportivo</h1>
-        <nav>
-            <ul>
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#nosotros">Nosotros</a></li>
-                <li><a href="#actividades">Actividades</a></li>
-                <li><a href="#inscripcion">Inscripción</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
 
     
+    <title>Club Deportivo</title>
+    <meta name="description" content="Club Deportivo en Tucuman: escuela de futbol, basquetbol, voley y hockey para todas las edades. Enterate las noticias, asociate y sumate a la familia del club.">
+
+    <link rel="canonical" href="https://tu-usuario.github.io/mi-proyecto/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Club Deportivo Tucuman | Sitio Oficial">
+    <meta property="og:description" content="Escuela de futbol, basquetbol, voley y hockey en Tucuman. Noticias, socios y contacto del Club Deportivo.">
+    <meta property="og:image" content="img/banner-cancha-club-deportivo.jpg">
+    <meta property="og:locale" content="es_AR">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="img/logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ENCABEZADO -->
+    <header class="header">
+        <div class="contenedor barra-header">
+            <div class="marca">
+                <img src="img/logo.png" alt="Escudo del Club Deportivo de Tucuman" class="logo">
+                <h1 class="titulo-marca">Club Deportivo</h1>
+            </div>
+
+            <button class="boton-menu" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-principal">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="menu" id="menu-principal" aria-label="Menu principal">
+                <ul class="lista-menu">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#actividades">Actividades</a></li>
+                    <li><a href="#noticias">Noticias</a></li>
+                    <li><a href="#inscripcion">Asociate</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
     <main>
-        <section id="inicio">
-            <h2>Bienvenidos</h2>
+
+        <!-- INICIO -->
+        <section id="inicio" class="hero">
+            <img src="img/banner.jpeg" alt="Jugadores del Club Deportivo de Tucuman festejando un gol en la cancha" class="banner" loading="lazy" width="1600" height="900">
+            <div class="contenedor contenido-hero">
+                <h2 class="titulo-hero">Club Deportivo</h2>
+                <p class="texto-hero">Mas de 100 años de historia, pasion y comunidad tucumana.</p>
+                <a href="#inscripcion" class="boton boton-rojo">Quiero asociarme</a>
+            </div>
         </section>
 
-        <section id="nosotros">
-            <h2>Quienes Somos</h2>
+        <!-- NOSOTROS -->
+
+        <section id="nosotros" class="seccion">
+            <div class="contenedor">
+                <h2 class="titulo-seccion">Quienes somos</h2>
+                <p class="texto-seccion">
+                    El Club Deportivo es una institucion deportiva y social de San Miguel de
+                    Tucuman, fundada a comienzos del siglo XX. A lo largo de su historia se convirtio en un
+                    simbolo de identidad para toda la provincia, con generaciones de socios que crecieron
+                    dentro de sus instalaciones.
+                </p>
+                <p class="texto-seccion">
+                    Hoy el club cuenta con escuelas deportivas para niños, niñas, jovenes y adultos,
+                    espacios recreativos y una sede social pensada para toda la familia.
+                    <a href="#actividades">Conoce nuestras actividades</a> o
+                    <a href="#inscripcion">asociate hoy mismo</a>.
+                </p>
+            </div>
         </section>
 
-        <section id="actividades">
-            <h2>Deportes y Actividades</h2>
-            <ul>
-                <li>Fútbol</li>
-                <li>Básquetbol</li>
-                <li>Voley</li>
-                <li>Hockey</li>
-            </ul>
+        <!-- ACTIVIDADES-->
+        <section id="actividades" class="seccion seccion-gris">
+            <div class="contenedor">
+                <h2 class="titulo-seccion">Deportes y actividades</h2>
+                <div class="tarjetas grilla-tarjetas">
+                    <article class="tarjeta">
+                        <h3>Futbol</h3>
+                        <p>Categorias desde infantiles hasta primera division. Entrenamos de lunes a viernes.</p>
+                    </article>
+                    <article class="tarjeta">
+                        <h3>Basquetbol</h3>
+                        <p>Formativas y equipo mayor compitiendo a nivel provincial.</p>
+                    </article>
+                    <article class="tarjeta">
+                        <h3>Voley</h3>
+                        <p>Escuela de voley para niños, niñas y adultos, sin necesidad de experiencia previa.</p>
+                    </article>
+                    <article class="tarjeta">
+                        <h3>Hockey</h3>
+                        <p>Un espacio en crecimiento dentro del club, abierto a nuevas incorporaciones.</p>
+                    </article>
+                </div>
+                <br>
+                <p class="texto-seccion">
+                    ¿Todavia no sos socio? <a href="#inscripcion">Mira como asociarte al club</a>.
+                </p>
+            </div>
         </section>
 
-        <section id="inscripcion">
-            <h2>Asociate</h2>
-            <p>Información sobre inscripciones y categorías.</p>
+        <!-- NOTICIAS -->
+        <section id="noticias" class="seccion">
+            <div class="contenedor">
+                <h2 class="titulo-seccion">Actualidad</h2>
+                <div class="tarjetas fila-tarjetas">
+                    <article class="tarjeta">
+                        <h3>Proximo partido de local</h3>
+                        <p>
+                            El primer equipo de futbol juega de local este fin de semana.
+                            <a href="#contacto">Consulta como conseguir tu entrada</a>.
+                        </p>
+                    </article>
+                    <article class="tarjeta">
+                        <h3>Apertura de inscripciones 2026</h3>
+                        <p>
+                            Ya podes anotarte en las categorias formativas 2026.
+                            <a href="#inscripcion">Anotate aca</a>.
+                        </p>
+                    </article>
+                </div>
+            </div>
         </section>
 
-        <section id="contacto">
-            <h2>Contacto</h2>
-            <p>Como contactarnos.</p>
+        <!-- INSCRIPCION -->
+        <section id="inscripcion" class="seccion seccion-gris">
+            <div class="contenedor">
+                <h2 class="titulo-seccion">Asociate</h2>
+                <p class="texto-seccion">
+                    Sumate como socio y accede a beneficios exclusivos, tu carnet digital de socio
+                    y descuentos en todas las actividades deportivas del club.
+                </p>
+                <a href="#contacto" class="boton boton-negro boton-centrado">Mas informacion</a>
+            </div>
         </section>
+
+        <!-- CONTACTO -->
+        <section id="contacto" class="seccion">
+            <div class="contenedor">
+                <h2 class="titulo-seccion">Contacto</h2>
+        
+                <form class="formulario">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" required>
+
+                    <label for="email">Correo electronico</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="mensaje">Mensaje</label>
+                    <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+
+                    <button type="submit" class="boton boton-rojo">Enviar</button>
+                </form>
+                <br>
+                <p style="text-align: center;">
+                    Para conocer las politicas deportivas de la provincia, podes visitar la
+                    <a href="https://guiadetramites.tucuman.gob.ar/organismo/17941/secretaria-de-estado-de-deportes.html" target="_blank" rel="noopener noreferrer">
+                        Secretaria de Estado de Deportes de Tucuman
+                    </a>.
+                </p>
+            </div>
+        </section>
+
     </main>
 
-    <footer>
-        <p>&copy; 2026 Club Deportivo. Todos los derechos reservados.</p>
+    <!-- PIE DE PAGINA -->
+    <footer class="footer">
+        <div class="contenedor contenido-footer">
+            <p>Club Deportivo. &copy; Todos los derechos reservados.</p>
+            <ul class="redes">
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Whatsapp</a></li>
+            </ul>
+        </div>
     </footer>
+
 </body>
 </html>
