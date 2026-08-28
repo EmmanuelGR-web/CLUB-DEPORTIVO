@@ -32,7 +32,7 @@ sus categorías deportivas, noticias, inscripción de socios y un formulario de 
   en columnas iguales, que se reducen a 2 y luego a 1 columna en pantallas
   más chicas.
 
-## ¿Qué variables CSS creamos?
+## Variables CSS
 Definidas en `:root` dentro de `style.css`, con nombres simples y directos:
 - **Colores**: `--color-rojo`, `--color-rojo-oscuro`, `--color-negro`,
   `--color-blanco`, `--color-gris-fondo`, `--color-texto`, `--color-texto-claro`.
@@ -42,7 +42,7 @@ Definidas en `:root` dentro de `style.css`, con nombres simples y directos:
 - **Bordes y sombras**: `--borde-radio`, `--sombra`.
 
 
-## ¿Cómo implementamos el Responsive Design?
+## DISEÑO RESPONSIVE
 - Meta `viewport` en el `<head>` para que el sitio escale bien en los celulares.
 - Unidades relativas (`rem`, `%`, `vh`, `fr`) en lugar de valores fijos en píxeles.
 - Dos **media queries**:
