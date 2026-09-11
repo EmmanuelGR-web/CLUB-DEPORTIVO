@@ -1,3 +1,5 @@
+/*
+
 :root {
 
     --color-rojo: #c8102e;
@@ -53,14 +55,14 @@ img {
 }
 
 /*ENCABEZADO*/
-.header {
+/* .header {
     background-color: var(--color-rojo);
     color: var(--color-blanco);
     position: sticky;
     top: 0;
     box-shadow: var(--sombra);
-}
-
+} */
+/* 
 .barra-header {
     display: flex;
     align-items: center;
@@ -73,22 +75,22 @@ img {
 .marca {
     display: flex;
     align-items:center;
-}
+} */
 
 
 
-.titulo-marca {
+/* .titulo-marca {
     font-size: 1.25rem;
     font-weight: 700;
 }
 
 .logo {
-  height: 52px; /* Aumentalo o reducelo a tu gusto (ej. 48px a 56px) */
-  width: auto;  /* Mantiene la proporción original sin deformar */
+  height: 52px; 
+  width: auto;  
   object-fit: contain;
 }
 
-/* MENU*/
+
 .lista-menu {
     display: flex;
     list-style: none;
@@ -127,9 +129,9 @@ img {
 .lista-menu a:hover::after {
   transform: scaleX(1);
   transform-origin: left;
-}
+} */
 
-/* HAMBURGUESA*/
+/* 
 .boton-menu {
     display: none;
     flex-direction: column;
@@ -144,10 +146,10 @@ img {
     width: 24px;
     height: 2px;
     background-color: var(--color-blanco);
-}
+} */
 
-/*SECCION INICIO*/
-.hero {
+
+/* .hero {
     position: relative;
     color: var(--color-blanco);
     text-align: center;
@@ -181,9 +183,9 @@ img {
 .texto-hero {
     font-size: 1.1rem;
     margin-bottom: var(--espacio-grande);
-}
+} */
 
-/*BOTONES*/
+/* 
 .boton {
     display: inline-block;
     padding: 0.75rem 2rem;
@@ -218,9 +220,9 @@ img {
     justify-content: center;
     width: fit-content;
     margin: 0 auto;
-}
+} */
 
-/*SECCIONES GENERALES*/
+/* 
 .seccion {
     padding: var(--espacio-extra) 0;
 }
@@ -251,17 +253,17 @@ a{
 a:hover {
 
   color: #b3001e;
-}
+} */
 
-/*ACTIVIDADES*/
-.grilla-tarjetas {
+
+/* .grilla-tarjetas {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: var(--espacio-grande);
     margin-top: var(--espacio-muy-grande);
 }
 
-/*NOTICIAS*/
+
 .fila-tarjetas {
     display: flex;
     flex-wrap: wrap;
@@ -290,10 +292,10 @@ a:hover {
 .tarjeta p {
     color: var(--color-texto-claro);
     font-size: 0.95rem;
-}
+} */
 
-/*FORMULARIO CONTACTO*/
-.formulario {
+
+/* .formulario {
     max-width: 500px;
     margin: var(--espacio-muy-grande) auto 0;
     display: flex;
@@ -319,9 +321,9 @@ a:hover {
 .formulario button {
     align-self: center;
     margin-top: var(--espacio-chico);
-}
+} */
 
-/*PIE DE PAGINA*/
+/* 
 .footer {
     background-color: var(--color-negro);
     color: var(--color-blanco);
@@ -348,12 +350,12 @@ a:hover {
 }
 .redes a:hover{
     color: rgb(253, 250, 221);
-}
+} */
 
-/* =======DISEÑO RESPONSIVE======= */
 
-/*768px*/
-@media (max-width: 768px) {
+
+
+/* @media (max-width: 768px) {
     .grilla-tarjetas {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -365,9 +367,9 @@ a:hover {
     .contenido-footer {
         flex-direction: column;
     }
-}
+} */
 
-/*480px*/
+/* 
 @media (max-width: 480px) {
     .boton-menu {
         display: flex;
@@ -409,3 +411,4 @@ a:hover {
         padding: var(--espacio-muy-grande) 0;
     }
 }
+*/ 
