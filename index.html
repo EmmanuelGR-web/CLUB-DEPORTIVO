@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -30,10 +29,16 @@
                 <span class="fw-bold">Club Deportivo</span>
             </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
-                    aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <div class="d-flex align-items-center gap-2 order-lg-2">
+                <button id="btnModoOscuro" type="button" class="btn btn-outline-light btn-sm rounded-circle" aria-label="Cambiar tema" style="width:38px; height:38px;">
+                    <i class="bi bi-moon-stars-fill"></i>
+                </button>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
+                        aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
 
             <div class="collapse navbar-collapse" id="menuPrincipal">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-center gap-lg-2">
@@ -53,7 +58,7 @@
 
         <!-- INICIO -->
         <section id="inicio" class="position-relative d-flex align-items-center justify-content-center text-center text-white vh-80">
-            <img src="img/banner.jpeg" alt="Jugadores del Club Deportivo de Tucuman festejando un gol en la cancha"
+            <img src="img/banner.jpeg" alt="Predio del Club Deportivo"
                 class="w-100 h-100 position-absolute top-0 start-0 object-fit-cover" style="z-index: -2;" loading="lazy">
             <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50" style="z-index: -1;"></div>
             <div class="container position-relative py-5">
@@ -79,9 +84,9 @@
                             Hoy el club cuenta con escuelas deportivas para niños, niñas, jovenes y adultos,
                             espacios recreativos y una sede social pensada para toda la familia.
                         </p>
-                        <div class="text-center">
-                            <a href="#actividades" class="btn btn-outline-danger">Conoce nuestras actividades</a> o
-                            <a href="#inscripcion" class="btn btn-outline-danger">Asociate hoy mismo</a>.
+                        <div class="d-flex flex-wrap justify-content-center gap-2">
+                            <a href="#actividades" class="btn btn-outline-danger">Conoce nuestras actividades</a>
+                            <a href="#inscripcion" class="btn btn-outline-danger">Asociate hoy mismo</a>
                         </div>
                     </div>
                 </div>
@@ -229,5 +234,6 @@
         </div>
     </footer>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="js/script.js" defer></script>
 </body>
 </html>
