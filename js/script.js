@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     resaltarSeccionActivaEnMenu();
     cerrarMenuMobileAlHacerClick();
     activarModoOscuro();
+    activarBotonVolverArriba();
 });
 
 
@@ -102,3 +103,20 @@ function activarModoOscuro() {
         localStorage.setItem(CLAVE_ALMACENAMIENTO, nuevoTema);
     });
 }
+
+const btnVolverArriba = document.getElementById('btnVolverArriba');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            btnVolverArriba.classList.remove('d-none');
+        } else {
+            btnVolverArriba.classList.add('d-none');
+        }
+    });
+
+    btnVolverArriba.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
