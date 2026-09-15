@@ -155,8 +155,12 @@ function activarContadorDeCaracteres() {
 function validarFormularioContacto() {
     const formulario = document.getElementById("formularioContacto");
     const contenedorMensaje = document.getElementById("mensajeEnvioContacto");
+    const campoNombre = document.getElementById("nombre");
+    const campoEmail = document.getElementById("email");
+    const campoMensaje = document.getElementById("mensaje");
+    const contador = document.getElementById("contadorMensaje");
 
-    if (!formulario || !contenedorMensaje) return;
+    if (!formulario || !contenedorMensaje || !campoNombre || !campoEmail || !campoMensaje || !contador) return;
 
     formulario.addEventListener("submit", (evento) => {
         evento.preventDefault();
@@ -169,22 +173,26 @@ function validarFormularioContacto() {
             return;
         }
 
-        const nombre = document.getElementById("nombre").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const mensaje = document.getElementById("mensaje").value.trim();
+        const nombre = campoNombre.value.trim();
+        const email = campoEmail.value.trim();
+        const mensaje = campoMensaje.value.trim();
 
-        console.log({ nombre, email, mensaje });
+        console.log("Formulario Recibido:", {
+            nombre,
+            email,
+            mensaje
+        });
 
-        contenedorMensaje.innerHTML = `
-            <div class="alert alert-success d-flex align-items-center gap-2 mt-2" role="alert">
-                <i class="bi bi-check-circle-fill"></i>
-                <span>¡Gracias, ${nombre}! Recibimos tu mensaje, te vamos a responder a la brevedad.</span>
-            </div>
-        `;
+        const alerta = document.createElement("div");
+        alerta.className = "alert alert-success d-flex align-items-center gap-2 mt-2";
+        alerta.setAttribute("role", "alert");
+        alerta.innerHTML = '<i class="bi bi-check-circle-fill"></i><span></span>';
+        alerta.querySelector("span").textContent = `Gracias, ${nombre}! Recibimos tu mensaje, te vamos a responder a la brevedad.`;
+        contenedorMensaje.replaceChildren(alerta);
 
         formulario.reset();
         formulario.classList.remove("was-validated");
-        document.getElementById("contadorMensaje").textContent = "0/300 caracteres";
-        document.getElementById("contadorMensaje").classList.remove("text-danger");
+        contador.textContent = "0/300 caracteres";
+        contador.classList.remove("text-danger");
     });
 }
