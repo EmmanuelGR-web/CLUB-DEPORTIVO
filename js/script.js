@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     cerrarMenuMobileAlHacerClick();
     activarModoOscuro();
     activarBotonVolverArriba();
+    activarContadorDeCaracteres();
+    validarFormularioContacto();
 });
 
 
@@ -104,19 +106,85 @@ function activarModoOscuro() {
     });
 }
 
-const btnVolverArriba = document.getElementById('btnVolverArriba');
+function activarBotonVolverArriba() {
+    const boton = document.getElementById("btnVolverArriba");
+    if (!boton) return;
 
-    window.addEventListener('scroll', () => {
+    window.addEventListener("scroll", () => {
         if (window.scrollY > 300) {
-            btnVolverArriba.classList.remove('d-none');
+            boton.classList.remove("d-none");
         } else {
-            btnVolverArriba.classList.add('d-none');
+            boton.classList.add("d-none");
         }
     });
 
-    btnVolverArriba.addEventListener('click', () => {
+    boton.addEventListener("click", () => {
         window.scrollTo({
             top: 0,
-            behavior: 'smooth'
+            behavior: "smooth"
         });
     });
+}
+
+function actualizarAnioDelFooter() {
+    const spanAnio = document.getElementById("anioActual");
+    if (!spanAnio) return;
+    spanAnio.textContent = new Date().getFullYear();
+}
+
+function activarContadorDeCaracteres() {
+    const textarea = document.getElementById("mensaje");
+    const contador = document.getElementById("contadorMensaje");
+
+    if (!textarea || !contador) return;
+
+    const limite = textarea.maxLength;
+
+    textarea.addEventListener("input", () => {
+        const cantidadActual = textarea.value.length;
+        contador.textContent = `${cantidadActual}/${limite} caracteres`;
+
+        if (cantidadActual >= limite - 20) {
+            contador.classList.add("text-danger");
+        } else {
+            contador.classList.remove("text-danger");
+        }
+    });
+}
+
+function validarFormularioContacto() {
+    const formulario = document.getElementById("formularioContacto");
+    const contenedorMensaje = document.getElementById("mensajeEnvioContacto");
+
+    if (!formulario || !contenedorMensaje) return;
+
+    formulario.addEventListener("submit", (evento) => {
+        evento.preventDefault();
+
+        const esValido = formulario.checkValidity();
+        formulario.classList.add("was-validated");
+
+        if (!esValido) {
+            contenedorMensaje.innerHTML = "";
+            return;
+        }
+
+        const nombre = document.getElementById("nombre").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const mensaje = document.getElementById("mensaje").value.trim();
+
+        console.log({ nombre, email, mensaje });
+
+        contenedorMensaje.innerHTML = `
+            <div class="alert alert-success d-flex align-items-center gap-2 mt-2" role="alert">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>¡Gracias, ${nombre}! Recibimos tu mensaje, te vamos a responder a la brevedad.</span>
+            </div>
+        `;
+
+        formulario.reset();
+        formulario.classList.remove("was-validated");
+        document.getElementById("contadorMensaje").textContent = "0/300 caracteres";
+        document.getElementById("contadorMensaje").classList.remove("text-danger");
+    });
+}
