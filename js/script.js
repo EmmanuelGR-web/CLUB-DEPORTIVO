@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     activarBotonVolverArriba();
     activarContadorDeCaracteres();
     validarFormularioContacto();
+    activarAccesoPorRoles();
 });
 
 
@@ -126,11 +127,6 @@ function activarBotonVolverArriba() {
     });
 }
 
-function actualizarAnioDelFooter() {
-    const spanAnio = document.getElementById("anioActual");
-    if (!spanAnio) return;
-    spanAnio.textContent = new Date().getFullYear();
-}
 
 function activarContadorDeCaracteres() {
     const textarea = document.getElementById("mensaje");
@@ -155,8 +151,12 @@ function activarContadorDeCaracteres() {
 function validarFormularioContacto() {
     const formulario = document.getElementById("formularioContacto");
     const contenedorMensaje = document.getElementById("mensajeEnvioContacto");
+    const campoNombre = document.getElementById("nombre");
+    const campoEmail = document.getElementById("email");
+    const campoMensaje = document.getElementById("mensaje");
+    const contador = document.getElementById("contadorMensaje");
 
-    if (!formulario || !contenedorMensaje) return;
+    if (!formulario || !contenedorMensaje || !campoNombre || !campoEmail || !campoMensaje || !contador) return;
 
     formulario.addEventListener("submit", (evento) => {
         evento.preventDefault();
@@ -169,22 +169,257 @@ function validarFormularioContacto() {
             return;
         }
 
-        const nombre = document.getElementById("nombre").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const mensaje = document.getElementById("mensaje").value.trim();
+        const nombre = campoNombre.value.trim();
+        const email = campoEmail.value.trim();
+        const mensaje = campoMensaje.value.trim();
 
-        console.log({ nombre, email, mensaje });
+        console.log("Formulario Recibido:", {
+            nombre,
+            email,
+            mensaje
+        });
 
-        contenedorMensaje.innerHTML = `
-            <div class="alert alert-success d-flex align-items-center gap-2 mt-2" role="alert">
-                <i class="bi bi-check-circle-fill"></i>
-                <span>¡Gracias, ${nombre}! Recibimos tu mensaje, te vamos a responder a la brevedad.</span>
-            </div>
-        `;
+        const alerta = document.createElement("div");
+        alerta.className = "alert alert-success d-flex align-items-center gap-2 mt-2";
+        alerta.setAttribute("role", "alert");
+        alerta.innerHTML = '<i class="bi bi-check-circle-fill"></i><span></span>';
+        alerta.querySelector("span").textContent = `Gracias, ${nombre}! Recibimos tu mensaje, te vamos a responder a la brevedad.`;
+        contenedorMensaje.replaceChildren(alerta);
 
         formulario.reset();
         formulario.classList.remove("was-validated");
-        document.getElementById("contadorMensaje").textContent = "0/300 caracteres";
-        document.getElementById("contadorMensaje").classList.remove("text-danger");
+        contador.textContent = "0/300 caracteres";
+        contador.classList.remove("text-danger");
     });
 }
+
+function activarAccesoPorRoles() {
+    const formularioAcceso = document.getElementById("formularioAcceso");
+    const formularioRegistro = document.getElementById("formularioRegistro");
+    const formularioRecuperacion = document.getElementById("formularioRecuperacion");
+    const botonRegistro = document.getElementById("btnMostrarRegistro");
+    const botonVolverAcceso = document.getElementById("btnVolverAccesoDesdeRegistro");
+    const botonRecuperacion = document.getElementById("btnMostrarRecuperacion");
+    const mensajeAcceso = document.getElementById("mensajeAcceso");
+    const mensajeRegistro = document.getElementById("mensajeRegistro");
+    const mensajeRecuperacion = document.getElementById("mensajeRecuperacion");
+    const modal = document.getElementById("modalAcceso");
+    const panel = document.getElementById("panelUsuario");
+    const contenidoPublico = document.querySelector("main");
+    const tituloPanel = document.getElementById("tituloPanel");
+    const contenidoPanel = document.getElementById("contenidoPanel");
+    const botonCerrarSesion = document.getElementById("btnCerrarSesion");
+
+    if (!formularioAcceso || !formularioRegistro || !formularioRecuperacion || !botonRegistro || !botonVolverAcceso || !botonRecuperacion || !modal || !panel || !contenidoPublico) return;
+
+    const usuarios = {
+        socio: {
+            email: "socio@club.com",
+            contrasena: "socio123",
+            nombreRol: "Socio",
+            titulo: "Mis datos",
+            tarjetas: [
+                ["bi-person-badge", "Datos personales", "Consultá tu información y estado de socio."],
+                ["bi-credit-card-2-back", "Carnet digital", "Mostrá tu carnet digital para acceder a las instalaciones."],
+                ["bi-coin", "Mis pagos", "Revisá tus pagos y vencimientos de cuotas."],
+            ]
+        },
+        administrativo: {
+            email: "administrativo@club.com",
+            contrasena: "admin123",
+            nombreRol: "Personal administrativo",
+            titulo: "Panel administrativo",
+            tarjetas: [
+                ["bi-people", "Gestión de socios", "Consultá y actualizá los datos de los socios."],
+                ["bi-clipboard-data", "Inscripciones", "Revisá las nuevas solicitudes de asociacion."],
+                
+            ]
+        },
+        administrador: {
+            email: "principal@club.com",
+            contrasena: "principal123",
+            nombreRol: "Administrador principal",
+            titulo: "Panel de administración principal",
+            tarjetas: [
+                ["bi-people", "Gestión de socios", "Consultá y actualizá los datos de los socios."],
+                ["bi-shield-lock", "Permisos", "Administrá los accesos y roles del sistema."],
+                
+            ]
+        }
+    };
+
+    const obtenerSociosRegistrados = () => JSON.parse(localStorage.getItem("sociosRegistrados") || "[]");
+
+    const mostrarMensaje = (contenedor, tipo, texto) => {
+        contenedor.innerHTML = `<div class="alert alert-${tipo} mb-0" role="alert">${texto}</div>`;
+    };
+
+    const actualizarAvisosDeValidacion = (formulario) => {
+        formulario.querySelectorAll("input, select").forEach((campo) => {
+            const contenedorCampo = campo.closest(".mb-3");
+            const aviso = contenedorCampo ? contenedorCampo.querySelector(".invalid-feedback") : null;
+            if (aviso) aviso.classList.toggle("d-block", !campo.checkValidity());
+        });
+    };
+
+    [formularioAcceso, formularioRegistro, formularioRecuperacion].forEach((formulario) => {
+        formulario.addEventListener("input", () => {
+            if (formulario.classList.contains("was-validated")) actualizarAvisosDeValidacion(formulario);
+        });
+        formulario.addEventListener("change", () => {
+            if (formulario.classList.contains("was-validated")) actualizarAvisosDeValidacion(formulario);
+        });
+    });
+
+    const alternarVisibilidadContrasena = (boton) => {
+        const campo = document.getElementById(boton.dataset.target);
+        const icono = boton.querySelector("i");
+        if (!campo || !icono) return;
+
+        const mostrar = campo.type === "password";
+        campo.type = mostrar ? "text" : "password";
+        icono.classList.toggle("bi-eye", !mostrar);
+        icono.classList.toggle("bi-eye-slash", mostrar);
+        boton.setAttribute("aria-label", mostrar ? "Ocultar contraseña" : "Mostrar contraseña");
+        boton.setAttribute("title", mostrar ? "Ocultar contraseña" : "Mostrar contraseña");
+    };
+
+    document.querySelectorAll(".btnVerContrasena").forEach((boton) => {
+        boton.addEventListener("click", () => alternarVisibilidadContrasena(boton));
+    });
+
+    const renderizarPanel = (usuario) => {
+        tituloPanel.textContent = usuario.titulo;
+        contenidoPanel.replaceChildren();
+        const bienvenidaAnterior = panel.querySelector("[data-bienvenida]");
+        if (bienvenidaAnterior) bienvenidaAnterior.remove();
+
+        usuario.tarjetas.forEach(([icono, titulo, texto]) => {
+            const columna = document.createElement("div");
+            columna.className = "col-12 col-md-4";
+            columna.innerHTML = `
+                <article class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <i class="bi ${icono} fs-2 text-danger" aria-hidden="true"></i>
+                        <h2 class="h5 mt-3">${titulo}</h2>
+                        <p class="text-secondary mb-0">${texto}</p>
+                    </div>
+                </article>
+            `;
+            contenidoPanel.appendChild(columna);
+        });
+
+        const bienvenida = document.createElement("p");
+        bienvenida.className = "text-secondary mb-4";
+        bienvenida.dataset.bienvenida = "true";
+        bienvenida.textContent = `Sesión iniciada como ${usuario.nombreRol}.`;
+        contenidoPanel.before(bienvenida);
+    };
+
+    formularioAcceso.addEventListener("submit", (evento) => {
+        evento.preventDefault();
+        formularioAcceso.classList.add("was-validated");
+        actualizarAvisosDeValidacion(formularioAcceso);
+
+        if (!formularioAcceso.checkValidity()) return;
+
+        const rol = document.getElementById("rolUsuario").value;
+        const email = document.getElementById("emailAcceso").value.trim().toLowerCase();
+        const contrasena = document.getElementById("contrasenaAcceso").value;
+        const usuario = usuarios[rol];
+        const socioRegistrado = rol === "socio"
+            ? obtenerSociosRegistrados().find((socio) => socio.email === email && socio.contrasena === contrasena)
+            : null;
+
+        if (!usuario || (rol === "socio" && !socioRegistrado && (email !== usuario.email || contrasena !== usuario.contrasena)) || (rol !== "socio" && (email !== usuario.email || contrasena !== usuario.contrasena))) {
+            mostrarMensaje(mensajeAcceso, "danger", "El rol, email o contraseña no coinciden.");
+            return;
+        }
+
+        renderizarPanel(usuario);
+        contenidoPublico.classList.add("d-none");
+        panel.classList.remove("d-none");
+        formularioAcceso.reset();
+        formularioAcceso.classList.remove("was-validated");
+        mensajeAcceso.replaceChildren();
+        bootstrap.Modal.getOrCreateInstance(modal).hide();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    botonRegistro.addEventListener("click", () => {
+        formularioAcceso.classList.add("d-none");
+        formularioRecuperacion.classList.add("d-none");
+        botonRegistro.classList.add("d-none");
+        botonRecuperacion.classList.add("d-none");
+        formularioRegistro.classList.remove("d-none");
+        mensajeRegistro.replaceChildren();
+    });
+
+    botonVolverAcceso.addEventListener("click", () => {
+        formularioRegistro.classList.add("d-none");
+        formularioAcceso.classList.remove("d-none");
+        botonRegistro.classList.remove("d-none");
+        botonRecuperacion.classList.remove("d-none");
+        mensajeRegistro.replaceChildren();
+    });
+
+    formularioRegistro.addEventListener("submit", (evento) => {
+        evento.preventDefault();
+        formularioRegistro.classList.add("was-validated");
+
+        const contrasena = document.getElementById("contrasenaRegistro");
+        const confirmarContrasena = document.getElementById("confirmarContrasenaRegistro");
+        confirmarContrasena.setCustomValidity(contrasena.value === confirmarContrasena.value ? "" : "Las contraseñas no coinciden.");
+        actualizarAvisosDeValidacion(formularioRegistro);
+
+        if (!formularioRegistro.checkValidity()) return;
+
+        const socios = obtenerSociosRegistrados();
+        const email = document.getElementById("emailRegistro").value.trim().toLowerCase();
+
+        if (socios.some((socio) => socio.email === email) || email === usuarios.socio.email) {
+            mostrarMensaje(mensajeRegistro, "danger", "Ya existe un socio registrado con ese correo.");
+            return;
+        }
+
+        socios.push({
+            nombre: document.getElementById("nombreRegistro").value.trim(),
+            email,
+            telefono: document.getElementById("telefonoRegistro").value.trim(),
+            contrasena: contrasena.value
+        });
+        localStorage.setItem("sociosRegistrados", JSON.stringify(socios));
+        mostrarMensaje(mensajeRegistro, "success", "Registro exitoso. Ya podés iniciar sesión como socio.");
+        formularioRegistro.reset();
+        formularioRegistro.classList.remove("was-validated");
+    });
+
+    botonRecuperacion.addEventListener("click", () => {
+        formularioRecuperacion.classList.toggle("d-none");
+        mensajeRecuperacion.replaceChildren();
+    });
+
+    formularioRecuperacion.addEventListener("submit", (evento) => {
+        evento.preventDefault();
+        formularioRecuperacion.classList.add("was-validated");
+        actualizarAvisosDeValidacion(formularioRecuperacion);
+
+        if (!formularioRecuperacion.checkValidity()) return;
+
+        const email = document.getElementById("emailRecuperacion").value.trim();
+        mostrarMensaje(mensajeRecuperacion, "success", `Enviamos instrucciones de recuperación a ${email}.`);
+        formularioRecuperacion.reset();
+        formularioRecuperacion.classList.remove("was-validated");
+    });
+
+    if (botonCerrarSesion) {
+        botonCerrarSesion.addEventListener("click", () => {
+            panel.classList.add("d-none");
+            contenidoPublico.classList.remove("d-none");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
+}
+
+const video = document.getElementById("bannerVideo");
+video.playbackRate = 0.75;
