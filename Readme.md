@@ -12,7 +12,22 @@ sus categorías deportivas, noticias, inscripción de socios y un formulario de 
 ## Tecnologías utilizadas
 - HTML5 semántico
 - CSS3 (Flexbox, Grid, variables CSS, Media Queries)
+- Bootstrap 5.3 y Bootstrap Icons
+- JavaScript para validaciones, tema, navegación y acceso por roles
 - Git y GitHub para el control de versiones
+
+## Acceso simulado por roles
+El portal de socios funciona como una simulación frontend para demostrar el
+acceso diferenciado según el rol. Desde **Asociate** se abre el modal de login.
+
+| Rol | Email | Contraseña |
+|---|---|---|
+| Socio | `socio@club.com` | `socio123` |
+| Personal administrativo | `administrativo@club.com` | `admin123` |
+| Administrador principal | `administrador@club.com` | `principal123` |
+
+La recuperación de contraseña también es simulada: muestra una confirmación de
+envío en pantalla, pero no envía emails reales porque el proyecto no tiene backend.
 
 ## FLEXBOX
 - En la barra del **ENCABEZADO** (`.barra-header`), para alinear el logo, el
