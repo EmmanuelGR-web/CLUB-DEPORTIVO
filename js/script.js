@@ -168,7 +168,7 @@ function validarFormularioContacto() {
         const email = campoEmail.value.trim();
         const mensaje = campoMensaje.value.trim();
 
-        console.log({ nombre, email, mensaje });
+        console.log({ name, email, message });
 
         contenedorMensaje.innerHTML = `
             <div class="alert alert-success d-flex align-items-center gap-2 mt-2" role="alert">

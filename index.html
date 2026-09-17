@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+rootPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -6,7 +6,7 @@
 
     <title>Club Deportivo</title>
     <meta name="description" content="Club Deportivo en Tucuman: escuela de futbol, basquetbol, voley y hockey para todas las edades. Enterate las noticias, asociate y sumate a la familia del club.">
-
+    activateAccessByRoles();
    <link rel="icon" type="image/png" href="img/logo.png">
 
 
@@ -18,16 +18,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">css"> -->
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body>
 
     <header>
     <nav class="navbar navbar-expand-lg bg-danger navbar-dark fixed-top">
         <div class="container text-bg-danger ">
-            <a class="navbar-brand d-flex align-items-center gap-1" href="#inicio">
-                <img src="img/logo.png" alt="Escudo del Club Deportivo de Tucuman" width="80" height="50" class="">
-                <span class="fw-bold ">Club Deportivo</span>
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#inicio">
+                <img src="img/logo.png" alt="Escudo del Club Deportivo de Tucuman" width="44" height="44" class="rounded-circle border border-2 border-white">
+                <span class="fw-bold">Club Deportivo</span>
             </a>
 
             <div class="d-flex align-items-center gap-2 order-lg-2">
@@ -55,10 +55,10 @@
     </nav>
 </header>
 
-    <main class="flex-grow-1">
+    <main class="mt-3 pt-5">
 
         <!-- INICIO -->
-        <section id="inicio" class="position-relative d-flex align-items-center justify-content-center text-center text-white min-vh-100">
+        <section id="inicio" class="position-relative d-flex align-items-center justify-content-center text-center text-white vh-100">
             <video id="bannerVideo" src="img/banner_club_deportivo_v3.mp4" autoplay muted loop class="w-100 h-100 position-absolute top-0 start-0 object-fit-cover" style="z-index: -2;" loading="lazy"></video>
             <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50" style="z-index: -1;"></div>
             <div class="container position-relative py-5">
@@ -85,12 +85,8 @@
                             espacios recreativos y una sede social pensada para toda la familia.
                         </p>
                         <div class="text-center">
-                            <div class="acciones-nosotros">
-                                <a href="#actividades" class="btn btn-outline-danger">Conoce nuestras actividades</a>
-                                <span class="separador-acciones">o</span>
-                                <a href="#modalAcceso" data-bs-toggle="modal" class="btn btn-outline-danger">Asociate hoy mismo</a>
-                                <span class="separador-acciones">.</span>
-                            </div>
+                            <a href="#actividades" class="btn btn-outline-danger">Conoce nuestras actividades</a> o
+                            <a href="#modalAcceso" data-bs-toggle="modal" class="btn btn-outline-danger">Asociate hoy mismo</a>.
                         </div>
                     </div>
                 </div>
@@ -99,107 +95,72 @@
 
         <!-- ACTIVIDADES-->
         <section id="actividades" class="py-5 overflow-hidden">
-            <div class="container">
-                <h2 class="text-center fw-bold text-danger mb-4">Deportes y actividades</h2>
-                <div id="carruselActividades" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000" data-bs-touch="true" aria-label="Deportes y actividades del club">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carruselActividades" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Fútbol"></button>
-                        <button type="button" data-bs-target="#carruselActividades" data-bs-slide-to="1" aria-label="Básquetbol"></button>
-                        <button type="button" data-bs-target="#carruselActividades" data-bs-slide-to="2" aria-label="Vóley"></button>
-                        <button type="button" data-bs-target="#carruselActividades" data-bs-slide-to="3" aria-label="Hockey"></button>
+    <div class="container">
+        <h2 class="text-center fw-bold text-danger mb-5">Deportes y actividades</h2>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+            <div class="col">
+                <div class="card h-100 text-center shadow-sm rounded-5">
+                    <div class="card-body border-top border-danger border-5 rounded-5">
+                        <h3 class="h5 card-title text-danger">Futbol ⚽</h3>
+                        <p class="card-text text-secondary">Categorias desde infantiles hasta primera division. Entrenamos de lunes a viernes.</p>
                     </div>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <article class="actividad-card card text-center shadow-sm rounded-4">
-                                <div class="card-body d-flex flex-column justify-content-center border-top border-danger border-5 rounded-4 p-4 p-sm-5">
-                                    <h3 class="h5 card-title text-danger">Fútbol ⚽</h3>
-                                    <p class="card-text text-secondary mb-0">Categorías desde infantiles hasta primera división. Entrenamos de lunes a viernes.</p>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="carousel-item">
-                            <article class="actividad-card card text-center shadow-sm rounded-4">
-                                <div class="card-body d-flex flex-column justify-content-center border-top border-danger border-5 rounded-4 p-4 p-sm-5">
-                                    <h3 class="h5 card-title text-danger">Básquetbol 🏀</h3>
-                                    <p class="card-text text-secondary mb-0">Formativas y equipo mayor compitiendo a nivel provincial.</p>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="carousel-item">
-                            <article class="actividad-card card text-center shadow-sm rounded-4">
-                                <div class="card-body d-flex flex-column justify-content-center border-top border-danger border-5 rounded-4 p-4 p-sm-5">
-                                    <h3 class="h5 card-title text-danger">Vóley 🏐</h3>
-                                    <p class="card-text text-secondary mb-0">Escuela de vóley para niños, niñas y adultos, sin necesidad de experiencia previa.</p>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="carousel-item">
-                            <article class="actividad-card card text-center shadow-sm rounded-4">
-                                <div class="card-body d-flex flex-column justify-content-center border-top border-danger border-5 rounded-4 p-4 p-sm-5">
-                                    <h3 class="h5 card-title text-danger">Hockey 🏑</h3>
-                                    <p class="card-text text-secondary mb-0">Un espacio en crecimiento dentro del club, abierto a nuevas incorporaciones.</p>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carruselActividades" data-bs-slide="prev" aria-label="Actividad anterior">
-                        <span class="carousel-control-prev-icon bg-danger rounded-circle p-3" aria-hidden="true"></span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carruselActividades" data-bs-slide="next" aria-label="Actividad siguiente">
-                        <span class="carousel-control-next-icon bg-danger rounded-circle p-3" aria-hidden="true"></span>
-                    </button>
                 </div>
             </div>
-        </section>
+            <div class="col">
+                <div class="card h-100 text-center shadow-sm rounded-5">
+                    <div class="card-body border-top border-danger border-5 rounded-5">
+                        <h3 class="h5 card-title text-danger">Basquetbol 🏀</h3>
+                        <p class="card-text text-secondary">Formativas y equipo mayor compitiendo a nivel provincial.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 text-center shadow-sm rounded-5">
+                    <div class="card-body border-top border-danger border-5 rounded-5">
+                        <h3 class="h5 card-title text-danger">Voley 🏐</h3>
+                        <p class="card-text text-secondary">Escuela de voley para niños, niñas y adultos, sin necesidad de experiencia previa.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 text-center shadow-sm  rounded-5">
+                    <div class="card-body border-top border-danger border-5 rounded-5">
+                        <h3 class="h5 card-title text-danger">Hockey 🏑</h3>
+                        <p class="card-text text-secondary">Un espacio en crecimiento dentro del club, abierto a nuevas incorporaciones.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
         <!-- NOTICIAS -->
-
         <section id="noticias" class="py-5 bg-secondary bg-opacity-10">
             <div class="container">
                 <h2 class="text-center fw-bold text-danger mb-5">Actualidad</h2>
-                
-                
-                <div id="mazoNoticias" class="mx-auto position-relative">
-                    
-                
-                    <div class="card shadow-sm rounded-4 tarjeta-baraja">
-                        <div class="card-body border-top border-danger border-3 rounded-4 p-4 ">
-                            <h3 class="h5 card-title text-danger">Próximo partido de local</h3>
-                            <p class="card-text text-secondary">El primer equipo de fútbol juega de local este fin de semana.</p>
+                <div class="row row-cols-1 row-cols-md-2 g-4">
+                    <div class="col">
+                        <div class="card h-100 shadow-sm  rounded-4">
+                            <div class="card-body border-top border-danger border-3 rounded-4">
+                                <h3 class="h5 card-title text-danger">Proximo partido de local</h3>
+                                <p class="card-text text-secondary">
+                                    El primer equipo de futbol juega de local este fin de semana.
+                                </p>
+                            </div>
                         </div>
                     </div>
-
-                
-                    <div class="card shadow-sm rounded-4 tarjeta-baraja">
-                        <div class="card-body border-top border-danger border-3 rounded-4 p-4 ">
-                            <h3 class="h5 card-title text-danger">Apertura de inscripciones 2026</h3>
-                            <p class="card-text text-center text-secondary mb-3">
-                                Ya podés anotarte en las categorías formativas 2026.<a href="#inscripcion" class="btn btn-sm btn-outline-danger fw-semibold mt-3">
-                                    Anotate acá
-                                </a>
-                            </p>
-                            
-                                
-                            
+                    <div class="col">
+                        <div class="card h-100 shadow-sm rounded-4">
+                            <div class="card-body border-top border-danger border-3 rounded-4">
+                                <h3 class="h5 card-title text-danger">Apertura de inscripciones 2026</h3>
+                                <p class="card-text text-secondary">
+                                    Ya podes anotarte en las categorias formativas 2026.
+                                    <a href="#inscripcion" class="link-danger">Anotate aca</a>.
+                                </p>
+                            </div>
                         </div>
                     </div>
-
-                
-                    <div class="card shadow-sm rounded-4 tarjeta-baraja">
-                        <div class="card-body border-top border-danger border-3 rounded-4 p-4 ">
-                            <h3 class="h5 card-title text-danger">Nueva camiseta oficial</h3>
-                            <p class="card-text text-secondary">Ya está disponible en la tienda del club la nueva indumentaria de entrenamiento.</p>
-                        </div>
-                    </div>
-
                 </div>
-
-                <div class="text-center mt-4">
-                    <button id="btnPasarCarta" class="btn btn-outline-danger rounded-pill px-4 fw-bold">
-                        Siguiente
-                    </button>
-                </div>
-
             </div>
         </section>
 
@@ -220,7 +181,7 @@
             <div class="container">
                 
         
-                <div class="contacto-card col-md-8 col-lg-6 mx-auto border border-2 border-danger rounded-4 p-4 bg-secondary bg-opacity-10">
+                <div class="col-md-8 col-lg-6 mx-auto border border-2 border-danger rounded-4 p-4 bg-secondary bg-opacity-10">
                     <h2 class="text-center fw-bold text-danger mb-4">Contacto</h2>
 
                     <form id="formularioContacto" class="row g-3" novalidate>
@@ -300,7 +261,7 @@
                         <button type="submit" class="btn btn-danger w-100">Iniciar sesión</button>
                     </form>
 
-                    <div id="contenedorBotonesAcceso" class="text-center mt-3">
+                    <div class="text-center mt-3">
                         <button id="btnMostrarRegistro" type="button" class="btn btn-outline-danger w-100 mb-2">
                             Registrarse
                         </button>
@@ -357,18 +318,13 @@
                         <h3 class="h6 text-danger">Recuperar contraseña</h3>
                         <p class="small text-secondary">Ingresá tu email</p>
                         <label for="emailRecuperacion" class="form-label">Correo electrónico</label>
-                        <div class="d-flex gap-2">
+                        <div class="input-group">
                             <input type="email" id="emailRecuperacion" class="form-control" placeholder="tu@email.com" required>
-                            <button type="submit" class="btn btn-outline-danger text-nowrap">Enviar</button>
+                            <button type="submit" class="btn btn-outline-danger">Enviar</button>
                         </div>
                         <div class="invalid-feedback">Ingresá un correo válido.</div>
                         <div id="mensajeRecuperacion" class="mt-3" aria-live="polite"></div>
-                    
-                        <button id="btnVolverAccesoDesdeRecuperacion" type="button" class="btn btn-link link-danger text-decoration-none p-0 mt-3 d-block w-100 text-center">
-                            Volver a iniciar sesión
-                        </button>
                     </form>
-                    
                 </div>
             </div>
         </div>
@@ -390,25 +346,22 @@
         </div>
     </section>
 
-    <footer class="bg-dark py-4 border-top border-secondary mt-auto text-center overflow-hidden">
-        <div class="container">
-            <div class="d-flex flex-column align-items-center gap-2">
-                <p class="mb-0 text-white">
-                    Club Deportivo. &copy; Todos los derechos reservados.
-                </p>
-                
-                <ul class="list-unstyled d-flex flex-wrap justify-content-center gap-3 mb-0">
-                    <li>
-                        <a href="#" class="text-danger text-decoration-none link-light">Instagram</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-danger text-decoration-none link-light">Facebook</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-danger text-decoration-none link-light">Whatsapp</a>
-                    </li>
-                </ul>
-            </div>
+    <footer class="bg-dark py-4 border-top border-secondary text-center">
+        <div class="container d-flex flex-column align-items-center gap-2">
+            <p class="mb-0 text-white">
+                Club Deportivo. &copy; Todos los derechos reservados.
+            </p>
+            <ul class="list-inline mb-0 d-flex gap-3">
+                <li class="list-inline-item">
+                    <a href="#" class="link-light text-danger text-decoration-none">Instagram</a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="link-light text-danger text-decoration-none">Facebook</a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="link-light text-danger text-decoration-none">Whatsapp</a>
+                </li>
+            </ul>
         </div>
     </footer>
     
@@ -421,3 +374,4 @@
     <script src="js/script.js"></script>
 </body>
 </html>
+    <footer class="bg-dark py-4 border-top border-secondary mt-auto text-center overflow-hidden"></footer>
