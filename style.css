@@ -412,3 +412,153 @@ a:hover {
     }
 }
 */ 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+
+#carruselActividades .carousel-item {
+    min-height: 280px;
+    padding: 0.5rem 3.5rem 3.25rem;
+}
+
+.carousel-indicators [data-bs-target] {
+    background-color: #dc3545; 
+    height: 15px; 
+    border-radius: 50%; 
+}
+
+.carousel-indicators .active {
+    background-color: #8f0b20; 
+}
+
+.actividad-card {
+    width: 100%;
+    min-height: 220px;
+    max-width: 680px;
+    margin: 0 auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+.actividad-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(200, 16, 46, 0.15) !important;
+}
+
+.acciones-nosotros {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+.contacto-card {
+    width: 50%;
+}
+
+
+#mazoNoticias {
+    max-width: 500px;
+    height: 220px;
+    margin: 0 auto;
+    position:relative;
+}
+
+
+.tarjeta-baraja {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease, opacity 0.5s ease, filter 0.5s ease; 
+    cursor:pointer;
+}
+.tarjeta-baraja .card-body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.tarjeta-baraja:nth-child(1) {
+    z-index: 3; 
+    transform: translateX(10px) translateY(0) scale(1); 
+    opacity: 1;
+    filter: blur(0px);
+}
+
+
+.tarjeta-baraja:nth-child(2) {
+    z-index: 2; 
+    transform: translateX(-10px) translateY(10px) scale(0.96); 
+    opacity: 0.5;
+    filter: blur(1px);
+}
+
+.tarjeta-baraja:nth-child(3) {
+    z-index: 1; 
+    transform: translateX(-30px) translateY(20px) scale(0.92); 
+    opacity: 0.2;
+    filter: blur(2px);
+}
+
+@media (max-width: 767.98px) {
+    body {
+        max-width: 100%;
+    }
+
+    .container {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .navbar .container {
+        flex-wrap: wrap;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    .navbar-collapse {
+        flex-basis: 100%;
+        order: 3;
+    }
+
+    .navbar-brand {
+        min-width: 0;
+    }
+
+    .navbar-brand span {
+        white-space: nowrap;
+    }
+
+    .contacto-card {
+        width: 100%;
+    }
+
+    #carruselActividades .carousel-item {
+        min-height: 320px;
+        padding: 0.5rem 2.5rem 3.5rem;
+    }
+
+    .actividad-card {
+        width: 100%;
+        min-height: 260px;
+    }
+
+    .acciones-nosotros {
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .acciones-nosotros .btn {
+        width: 100%;
+    }
+
+    .acciones-nosotros .separador-acciones {
+        text-align: center;
+    }
+}
