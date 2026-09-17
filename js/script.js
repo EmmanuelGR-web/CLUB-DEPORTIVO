@@ -168,18 +168,314 @@ function validarFormularioContacto() {
         const email = campoEmail.value.trim();
         const mensaje = campoMensaje.value.trim();
 
-        console.log({ name, email, message });
-
-        contenedorMensaje.innerHTML = `
-            <div class="alert alert-success d-flex align-items-center gap-2 mt-2" role="alert">
-                <i class="bi bi-check-circle-fill"></i>
-                <span>¡Gracias, ${nombre}! Recibimos tu mensaje, te vamos a responder a la brevedad.</span>
-            </div>
-        `;
+        const alert = document.createElement("div");
+        alerta.className = "alert alert-success d-flex align-items-center gap-2 mt-2";
+        alerta.setAttribute("role", "alert");
+        alerta.innerHTML = '<i class="bi bi-check-circle-fill"></i><span></span>';
+        alerta.querySelector("span").textContent = `Gracias, ${nombre}! Recibimos tu mensaje, te vamos a responder a la brevedad.`;
+        contenedorMensaje.replaceChildren(alerta);
 
         formulario.reset();
         formulario.classList.remove("was-validated");
-        document.getElementById("contadorMensaje").textContent = "0/300 caracteres";
-        document.getElementById("contadorMensaje").classList.remove("text-danger");
+        contador.textContent = "0/300 caracteres";
+        contador.classList.remove("text-danger");
+    });
+}
+
+function activarAccesoPorRoles() {
+    const formularioAcceso = document.getElementById("formularioAcceso");
+    const contenedorBotones = document.getElementById("contenedorBotonesAcceso");
+    const formularioRegistro = document.getElementById("formularioRegistro");
+    const formularioRecuperacion = document.getElementById("formularioRecuperacion");
+    
+    const botonRegistro = document.getElementById("btnMostrarRegistro");
+    const botonRecuperacion = document.getElementById("btnMostrarRecuperacion");
+    const botonVolverRegistro = document.getElementById("btnVolverAccesoDesdeRegistro");
+    const botonVolverRecuperacion = document.getElementById("btnVolverAccesoDesdeRecuperacion");
+
+    const mensajeAcceso = document.getElementById("mensajeAcceso");
+    const mensajeRegistro = document.getElementById("mensajeRegistro");
+    const mensajeRecuperacion = document.getElementById("mensajeRecuperacion");
+    const modal = document.getElementById("modalAcceso");
+    const panel = document.getElementById("panelUsuario");
+    const contenidoPublico = document.querySelector("main");
+    const tituloPanel = document.getElementById("tituloPanel");
+    const contenidoPanel = document.getElementById("contenidoPanel");
+    const botonCerrarSesion = document.getElementById("btnCerrarSesion");
+
+    if (!formularioAcceso || !modal || !panel || !contenidoPublico) return;
+
+    const usuarios = {
+        socio: {
+            email: "socio@club.com",
+            contrasena: "socio123",
+            nombreRol: "Socio",
+            titulo: "Mis datos",
+            tarjetas: [
+                ["bi-person-badge", "Datos personales", "Consultá tu información y estado de socio."],
+                ["bi-credit-card-2-back", "Carnet digital", "Mostrá tu carnet digital para acceder a las instalaciones."],
+                ["bi-coin", "Mis pagos", "Revisá tus pagos y vencimientos de cuotas."],
+            ]
+        },
+        administrativo: {
+            email: "administrativo@club.com",
+            contrasena: "admin123",
+            nombreRol: "Personal administrativo",
+            titulo: "Panel administrativo",
+            tarjetas: [
+                ["bi-people", "Gestión de socios", "Consultá y actualizá los datos de los socios."],
+                ["bi-clipboard-data", "Inscripciones", "Revisá las nuevas solicitudes de asociacion."],
+            ]
+        },
+        administrador: {
+            email: "principal@club.com",
+            contrasena: "principal123",
+            nombreRol: "Administrador principal",
+            titulo: "Panel de administración principal",
+            tarjetas: [
+                ["bi-people", "Gestión de socios", "Consultá y actualizá los datos de los socios."],
+                ["bi-shield-lock", "Permisos", "Administrá los accesos y roles del sistema."],
+            ]
+        }
+    };
+
+    const obtenerSociosRegistrados = () => JSON.parse(localStorage.getItem("sociosRegistrados") || "[]");
+
+    const mostrarMensaje = (contenedor, tipo, texto) => {
+        if (contenedor) contenedor.innerHTML = `<div class="alert alert-${tipo} mb-0" role="alert">${texto}</div>`;
+    };
+
+    const actualizarAvisosDeValidacion = (formulario) => {
+        if (!formulario) return;
+        formulario.querySelectorAll("input, select").forEach((campo) => {
+            const contenedorCampo = campo.closest(".mb-3");
+            const aviso = contenedorCampo ? contenedorCampo.querySelector(".invalid-feedback") : null;
+            if (aviso) aviso.classList.toggle("d-block", !campo.checkValidity());
+        });
+    };
+
+    [formularioAcceso, formularioRegistro, formularioRecuperacion].forEach((formulario) => {
+        if (!formulario) return;
+        formulario.addEventListener("input", () => {
+            if (formulario.classList.contains("was-validated")) actualizarAvisosDeValidacion(formulario);
+        });
+        formulario.addEventListener("change", () => {
+            if (formulario.classList.contains("was-validated")) actualizarAvisosDeValidacion(formulario);
+        });
+    });
+
+    const alternarVisibilidadContrasena = (boton) => {
+        const campo = document.getElementById(boton.dataset.target);
+        const icono = boton.querySelector("i");
+        if (!campo || !icono) return;
+
+        const mostrar = campo.type === "password";
+        campo.type = mostrar ? "text" : "password";
+        icono.classList.toggle("bi-eye", !mostrar);
+        icono.classList.toggle("bi-eye-slash", mostrar);
+        boton.setAttribute("aria-label", mostrar ? "Ocultar contraseña" : "Mostrar contraseña");
+        boton.setAttribute("title", mostrar ? "Ocultar contraseña" : "Mostrar contraseña");
+    };
+
+    document.querySelectorAll(".btnVerContrasena").forEach((boton) => {
+        boton.addEventListener("click", () => alternarVisibilidadContrasena(boton));
+    });
+
+    const renderizarPanel = (usuario) => {
+        if (!tituloPanel || !contenidoPanel) return;
+        tituloPanel.textContent = usuario.titulo;
+        contenidoPanel.replaceChildren();
+        const bienvenidaAnterior = panel.querySelector("[data-bienvenida]");
+        if (bienvenidaAnterior) bienvenidaAnterior.remove();
+
+        usuario.tarjetas.forEach(([icono, titulo, texto]) => {
+            const columna = document.createElement("div");
+            columna.className = "col-12 col-md-4";
+            columna.innerHTML = `
+                <article class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <i class="bi ${icono} fs-2 text-danger" aria-hidden="true"></i>
+                        <h2 class="h5 mt-3">${titulo}</h2>
+                        <p class="text-secondary mb-0">${texto}</p>
+                    </div>
+                </article>
+            `;
+            contenidoPanel.appendChild(columna);
+        });
+
+        const bienvenida = document.createElement("p");
+        bienvenida.className = "text-secondary mb-4";
+        bienvenida.dataset.bienvenida = "true";
+        bienvenida.textContent = `Sesión iniciada como ${usuario.nombreRol}.`;
+        contenidoPanel.before(bienvenida);
+    };
+
+    formularioAcceso.addEventListener("submit", (evento) => {
+        evento.preventDefault();
+        formularioAcceso.classList.add("was-validated");
+        actualizarAvisosDeValidacion(formularioAcceso);
+
+        if (!formularioAcceso.checkValidity()) return;
+
+        const rol = document.getElementById("rolUsuario").value;
+        const email = document.getElementById("emailAcceso").value.trim().toLowerCase();
+        const contrasena = document.getElementById("contrasenaAcceso").value;
+        const usuario = usuarios[rol];
+        const socioRegistrado = rol === "socio"
+            ? obtenerSociosRegistrados().find((socio) => socio.email === email && socio.contrasena === contrasena)
+            : null;
+
+        if (!usuario || (rol === "socio" && !socioRegistrado && (email !== usuario.email || contrasena !== usuario.contrasena)) || (rol !== "socio" && (email !== usuario.email || contrasena !== usuario.contrasena))) {
+            mostrarMensaje(mensajeAcceso, "danger", "El rol, email o contraseña no coinciden.");
+            return;
+        }
+
+        renderizarPanel(usuario);
+        contenidoPublico.classList.add("d-none");
+        panel.classList.remove("d-none");
+        formularioAcceso.reset();
+        formularioAcceso.classList.remove("was-validated");
+        if (mensajeAcceso) mensajeAcceso.replaceChildren();
+        bootstrap.Modal.getOrCreateInstance(modal).hide();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    
+    if (botonRegistro && formularioRegistro) {
+        botonRegistro.addEventListener("click", () => {
+            formularioAcceso.classList.add("d-none");
+            if (contenedorBotones) contenedorBotones.classList.add("d-none");
+            if (formularioRecuperacion) formularioRecuperacion.classList.add("d-none");
+            formularioRegistro.classList.remove("d-none");
+            if (mensajeRegistro) mensajeRegistro.replaceChildren();
+        });
+    }
+
+    if (botonVolverRegistro && formularioRegistro) {
+        botonVolverRegistro.addEventListener("click", () => {
+            formularioRegistro.classList.add("d-none");
+            formularioAcceso.classList.remove("d-none");
+            if (contenedorBotones) contenedorBotones.classList.remove("d-none");
+            if (mensajeRegistro) mensajeRegistro.replaceChildren();
+        });
+    }
+
+    if (botonRecuperacion && formularioRecuperacion) {
+        botonRecuperacion.addEventListener("click", () => {
+            formularioAcceso.classList.add("d-none");
+            if (contenedorBotones) contenedorBotones.classList.add("d-none");
+            if (formularioRegistro) formularioRegistro.classList.add("d-none");
+            formularioRecuperacion.classList.remove("d-none");
+            if (mensajeRecuperacion) mensajeRecuperacion.replaceChildren();
+        });
+    }
+
+    if (botonVolverRecuperacion && formularioRecuperacion) {
+        botonVolverRecuperacion.addEventListener("click", () => {
+            formularioRecuperacion.classList.add("d-none");
+            formularioAcceso.classList.remove("d-none");
+            if (contenedorBotones) contenedorBotones.classList.remove("d-none");
+            if (mensajeRecuperacion) mensajeRecuperacion.replaceChildren();
+        });
+    }
+
+    if (formularioRegistro) {
+        formularioRegistro.addEventListener("submit", (evento) => {
+            evento.preventDefault();
+            formularioRegistro.classList.add("was-validated");
+
+            const contrasena = document.getElementById("contrasenaRegistro");
+            const confirmarContrasena = document.getElementById("confirmarContrasenaRegistro");
+            if (contrasena && confirmarContrasena) {
+                confirmarContrasena.setCustomValidity(contrasena.value === confirmarContrasena.value ? "" : "Las contraseñas no coinciden.");
+            }
+            actualizarAvisosDeValidacion(formularioRegistro);
+
+            if (!formularioRegistro.checkValidity()) return;
+
+            const socios = obtenerSociosRegistrados();
+            const email = document.getElementById("emailRegistro").value.trim().toLowerCase();
+
+            if (socios.some((socio) => socio.email === email) || email === usuarios.socio.email) {
+                mostrarMensaje(mensajeRegistro, "danger", "Ya existe un socio registrado con ese correo.");
+                return;
+            }
+
+            socios.push({
+                nombre: document.getElementById("nombreRegistro").value.trim(),
+                email,
+                telefono: document.getElementById("telefonoRegistro").value.trim(),
+                contrasena: contrasena.value
+            });
+            localStorage.setItem("sociosRegistrados", JSON.stringify(socios));
+            mostrarMensaje(mensajeRegistro, "success", "Registro exitoso. Ya podés iniciar sesión como socio.");
+            formularioRegistro.reset();
+            formularioRegistro.classList.remove("was-validated");
+        });
+    }
+
+    if (formularioRecuperacion) {
+        formularioRecuperacion.addEventListener("submit", (evento) => {
+            evento.preventDefault();
+            formularioRecuperacion.classList.add("was-validated");
+            actualizarAvisosDeValidacion(formularioRecuperacion);
+
+            if (!formularioRecuperacion.checkValidity()) return;
+
+            const email = document.getElementById("emailRecuperacion").value.trim();
+            mostrarMensaje(mensajeRecuperacion, "success", `Enviamos instrucciones de recuperación a ${email}.`);
+            formularioRecuperacion.reset();
+            formularioRecuperacion.classList.remove("was-validated");
+        });
+    }
+
+    if (botonCerrarSesion) {
+        botonCerrarSesion.addEventListener("click", () => {
+            panel.classList.add("d-none");
+            contenidoPublico.classList.remove("d-none");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
+}
+
+function activarCarruselActividades() {
+    const carrusel = document.getElementById("carruselActividades");
+    if (!carrusel || typeof bootstrap === "undefined") return;
+
+    const instanciaCarrusel = bootstrap.Carousel.getOrCreateInstance(carrusel, {
+        interval: 4000,
+        touch: true,
+        keyboard: true,
+        pause: "hover" 
+    });
+
+    instanciaCarrusel.cycle();
+}
+
+function configurarVideoBanner() {
+    const video = document.getElementById("bannerVideo");
+    if (video) {
+        video.playbackRate = 0.75;
+    }
+}
+
+function configurarBarajaNoticias() {
+    const boton = document.getElementById("btnPasarCarta");
+    const mazo = document.getElementById("mazoNoticias");
+
+    if (boton && mazo) {
+        boton.addEventListener("click", function() {
+            const cartas = mazo.getElementsByClassName("tarjeta-baraja");
+            if (cartas.length > 0) {
+                mazo.appendChild(cartas[0]);
+            }
+        });
+    }
+
+    mazo?.addEventListener("click", function() {
+        const cartas = this.getElementsByClassName("tarjeta-baraja");
+        if (cartas.length > 0) {
+            this.appendChild(cartas[0]);
+        }
     });
 }
