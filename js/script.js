@@ -7,9 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
     activarContadorDeCaracteres();
     validarFormularioContacto();
     activarAccesoPorRoles();
+    activarCarruselActividades();
+    configurarVideoBanner();
+    configurarBarajaNoticias();
 });
-
-
 
 function resaltarNavbarAlScroll() {
     const navbar = document.querySelector(".navbar");
@@ -32,8 +33,6 @@ function resaltarNavbarAlScroll() {
         }
     });
 }
-
-
 
 function resaltarSeccionActivaEnMenu() {
     const secciones = document.querySelectorAll("main section[id]");
@@ -62,7 +61,6 @@ function resaltarSeccionActivaEnMenu() {
     secciones.forEach((seccion) => observador.observe(seccion));
 }
 
-
 function cerrarMenuMobileAlHacerClick() {
     const menu = document.getElementById("menuPrincipal");
     if (!menu) return;
@@ -80,7 +78,6 @@ function cerrarMenuMobileAlHacerClick() {
     });
 }
 
-
 function activarModoOscuro() {
     const boton = document.getElementById("btnModoOscuro");
     const icono = boton ? boton.querySelector("i") : null;
@@ -93,7 +90,6 @@ function activarModoOscuro() {
         icono.classList.toggle("bi-moon-stars-fill", tema === "light");
         icono.classList.toggle("bi-sun-fill", tema === "dark");
     };
-
 
     const temaGuardado = localStorage.getItem(CLAVE_ALMACENAMIENTO) || "light";
     aplicarTema(temaGuardado);
@@ -126,7 +122,6 @@ function activarBotonVolverArriba() {
         });
     });
 }
-
 
 function activarContadorDeCaracteres() {
     const textarea = document.getElementById("mensaje");
@@ -173,12 +168,6 @@ function validarFormularioContacto() {
         const email = campoEmail.value.trim();
         const mensaje = campoMensaje.value.trim();
 
-        console.log("Formulario Recibido:", {
-            nombre,
-            email,
-            mensaje
-        });
-
         const alerta = document.createElement("div");
         alerta.className = "alert alert-success d-flex align-items-center gap-2 mt-2";
         alerta.setAttribute("role", "alert");
@@ -195,11 +184,15 @@ function validarFormularioContacto() {
 
 function activarAccesoPorRoles() {
     const formularioAcceso = document.getElementById("formularioAcceso");
+    const contenedorBotones = document.getElementById("contenedorBotonesAcceso");
     const formularioRegistro = document.getElementById("formularioRegistro");
     const formularioRecuperacion = document.getElementById("formularioRecuperacion");
+    
     const botonRegistro = document.getElementById("btnMostrarRegistro");
-    const botonVolverAcceso = document.getElementById("btnVolverAccesoDesdeRegistro");
     const botonRecuperacion = document.getElementById("btnMostrarRecuperacion");
+    const botonVolverRegistro = document.getElementById("btnVolverAccesoDesdeRegistro");
+    const botonVolverRecuperacion = document.getElementById("btnVolverAccesoDesdeRecuperacion");
+
     const mensajeAcceso = document.getElementById("mensajeAcceso");
     const mensajeRegistro = document.getElementById("mensajeRegistro");
     const mensajeRecuperacion = document.getElementById("mensajeRecuperacion");
@@ -210,7 +203,7 @@ function activarAccesoPorRoles() {
     const contenidoPanel = document.getElementById("contenidoPanel");
     const botonCerrarSesion = document.getElementById("btnCerrarSesion");
 
-    if (!formularioAcceso || !formularioRegistro || !formularioRecuperacion || !botonRegistro || !botonVolverAcceso || !botonRecuperacion || !modal || !panel || !contenidoPublico) return;
+    if (!formularioAcceso || !modal || !panel || !contenidoPublico) return;
 
     const usuarios = {
         socio: {
@@ -232,7 +225,6 @@ function activarAccesoPorRoles() {
             tarjetas: [
                 ["bi-people", "Gestión de socios", "Consultá y actualizá los datos de los socios."],
                 ["bi-clipboard-data", "Inscripciones", "Revisá las nuevas solicitudes de asociacion."],
-                
             ]
         },
         administrador: {
@@ -243,7 +235,6 @@ function activarAccesoPorRoles() {
             tarjetas: [
                 ["bi-people", "Gestión de socios", "Consultá y actualizá los datos de los socios."],
                 ["bi-shield-lock", "Permisos", "Administrá los accesos y roles del sistema."],
-                
             ]
         }
     };
@@ -251,10 +242,11 @@ function activarAccesoPorRoles() {
     const obtenerSociosRegistrados = () => JSON.parse(localStorage.getItem("sociosRegistrados") || "[]");
 
     const mostrarMensaje = (contenedor, tipo, texto) => {
-        contenedor.innerHTML = `<div class="alert alert-${tipo} mb-0" role="alert">${texto}</div>`;
+        if (contenedor) contenedor.innerHTML = `<div class="alert alert-${tipo} mb-0" role="alert">${texto}</div>`;
     };
 
     const actualizarAvisosDeValidacion = (formulario) => {
+        if (!formulario) return;
         formulario.querySelectorAll("input, select").forEach((campo) => {
             const contenedorCampo = campo.closest(".mb-3");
             const aviso = contenedorCampo ? contenedorCampo.querySelector(".invalid-feedback") : null;
@@ -263,6 +255,7 @@ function activarAccesoPorRoles() {
     };
 
     [formularioAcceso, formularioRegistro, formularioRecuperacion].forEach((formulario) => {
+        if (!formulario) return;
         formulario.addEventListener("input", () => {
             if (formulario.classList.contains("was-validated")) actualizarAvisosDeValidacion(formulario);
         });
@@ -289,6 +282,7 @@ function activarAccesoPorRoles() {
     });
 
     const renderizarPanel = (usuario) => {
+        if (!tituloPanel || !contenidoPanel) return;
         tituloPanel.textContent = usuario.titulo;
         contenidoPanel.replaceChildren();
         const bienvenidaAnterior = panel.querySelector("[data-bienvenida]");
@@ -341,76 +335,99 @@ function activarAccesoPorRoles() {
         panel.classList.remove("d-none");
         formularioAcceso.reset();
         formularioAcceso.classList.remove("was-validated");
-        mensajeAcceso.replaceChildren();
+        if (mensajeAcceso) mensajeAcceso.replaceChildren();
         bootstrap.Modal.getOrCreateInstance(modal).hide();
         window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
-    botonRegistro.addEventListener("click", () => {
-        formularioAcceso.classList.add("d-none");
-        formularioRecuperacion.classList.add("d-none");
-        botonRegistro.classList.add("d-none");
-        botonRecuperacion.classList.add("d-none");
-        formularioRegistro.classList.remove("d-none");
-        mensajeRegistro.replaceChildren();
-    });
-
-    botonVolverAcceso.addEventListener("click", () => {
-        formularioRegistro.classList.add("d-none");
-        formularioAcceso.classList.remove("d-none");
-        botonRegistro.classList.remove("d-none");
-        botonRecuperacion.classList.remove("d-none");
-        mensajeRegistro.replaceChildren();
-    });
-
-    formularioRegistro.addEventListener("submit", (evento) => {
-        evento.preventDefault();
-        formularioRegistro.classList.add("was-validated");
-
-        const contrasena = document.getElementById("contrasenaRegistro");
-        const confirmarContrasena = document.getElementById("confirmarContrasenaRegistro");
-        confirmarContrasena.setCustomValidity(contrasena.value === confirmarContrasena.value ? "" : "Las contraseñas no coinciden.");
-        actualizarAvisosDeValidacion(formularioRegistro);
-
-        if (!formularioRegistro.checkValidity()) return;
-
-        const socios = obtenerSociosRegistrados();
-        const email = document.getElementById("emailRegistro").value.trim().toLowerCase();
-
-        if (socios.some((socio) => socio.email === email) || email === usuarios.socio.email) {
-            mostrarMensaje(mensajeRegistro, "danger", "Ya existe un socio registrado con ese correo.");
-            return;
-        }
-
-        socios.push({
-            nombre: document.getElementById("nombreRegistro").value.trim(),
-            email,
-            telefono: document.getElementById("telefonoRegistro").value.trim(),
-            contrasena: contrasena.value
+    
+    if (botonRegistro && formularioRegistro) {
+        botonRegistro.addEventListener("click", () => {
+            formularioAcceso.classList.add("d-none");
+            if (contenedorBotones) contenedorBotones.classList.add("d-none");
+            if (formularioRecuperacion) formularioRecuperacion.classList.add("d-none");
+            formularioRegistro.classList.remove("d-none");
+            if (mensajeRegistro) mensajeRegistro.replaceChildren();
         });
-        localStorage.setItem("sociosRegistrados", JSON.stringify(socios));
-        mostrarMensaje(mensajeRegistro, "success", "Registro exitoso. Ya podés iniciar sesión como socio.");
-        formularioRegistro.reset();
-        formularioRegistro.classList.remove("was-validated");
-    });
+    }
 
-    botonRecuperacion.addEventListener("click", () => {
-        formularioRecuperacion.classList.toggle("d-none");
-        mensajeRecuperacion.replaceChildren();
-    });
+    if (botonVolverRegistro && formularioRegistro) {
+        botonVolverRegistro.addEventListener("click", () => {
+            formularioRegistro.classList.add("d-none");
+            formularioAcceso.classList.remove("d-none");
+            if (contenedorBotones) contenedorBotones.classList.remove("d-none");
+            if (mensajeRegistro) mensajeRegistro.replaceChildren();
+        });
+    }
 
-    formularioRecuperacion.addEventListener("submit", (evento) => {
-        evento.preventDefault();
-        formularioRecuperacion.classList.add("was-validated");
-        actualizarAvisosDeValidacion(formularioRecuperacion);
+    if (botonRecuperacion && formularioRecuperacion) {
+        botonRecuperacion.addEventListener("click", () => {
+            formularioAcceso.classList.add("d-none");
+            if (contenedorBotones) contenedorBotones.classList.add("d-none");
+            if (formularioRegistro) formularioRegistro.classList.add("d-none");
+            formularioRecuperacion.classList.remove("d-none");
+            if (mensajeRecuperacion) mensajeRecuperacion.replaceChildren();
+        });
+    }
 
-        if (!formularioRecuperacion.checkValidity()) return;
+    if (botonVolverRecuperacion && formularioRecuperacion) {
+        botonVolverRecuperacion.addEventListener("click", () => {
+            formularioRecuperacion.classList.add("d-none");
+            formularioAcceso.classList.remove("d-none");
+            if (contenedorBotones) contenedorBotones.classList.remove("d-none");
+            if (mensajeRecuperacion) mensajeRecuperacion.replaceChildren();
+        });
+    }
 
-        const email = document.getElementById("emailRecuperacion").value.trim();
-        mostrarMensaje(mensajeRecuperacion, "success", `Enviamos instrucciones de recuperación a ${email}.`);
-        formularioRecuperacion.reset();
-        formularioRecuperacion.classList.remove("was-validated");
-    });
+    if (formularioRegistro) {
+        formularioRegistro.addEventListener("submit", (evento) => {
+            evento.preventDefault();
+            formularioRegistro.classList.add("was-validated");
+
+            const contrasena = document.getElementById("contrasenaRegistro");
+            const confirmarContrasena = document.getElementById("confirmarContrasenaRegistro");
+            if (contrasena && confirmarContrasena) {
+                confirmarContrasena.setCustomValidity(contrasena.value === confirmarContrasena.value ? "" : "Las contraseñas no coinciden.");
+            }
+            actualizarAvisosDeValidacion(formularioRegistro);
+
+            if (!formularioRegistro.checkValidity()) return;
+
+            const socios = obtenerSociosRegistrados();
+            const email = document.getElementById("emailRegistro").value.trim().toLowerCase();
+
+            if (socios.some((socio) => socio.email === email) || email === usuarios.socio.email) {
+                mostrarMensaje(mensajeRegistro, "danger", "Ya existe un socio registrado con ese correo.");
+                return;
+            }
+
+            socios.push({
+                nombre: document.getElementById("nombreRegistro").value.trim(),
+                email,
+                telefono: document.getElementById("telefonoRegistro").value.trim(),
+                contrasena: contrasena.value
+            });
+            localStorage.setItem("sociosRegistrados", JSON.stringify(socios));
+            mostrarMensaje(mensajeRegistro, "success", "Registro exitoso. Ya podés iniciar sesión como socio.");
+            formularioRegistro.reset();
+            formularioRegistro.classList.remove("was-validated");
+        });
+    }
+
+    if (formularioRecuperacion) {
+        formularioRecuperacion.addEventListener("submit", (evento) => {
+            evento.preventDefault();
+            formularioRecuperacion.classList.add("was-validated");
+            actualizarAvisosDeValidacion(formularioRecuperacion);
+
+            if (!formularioRecuperacion.checkValidity()) return;
+
+            const email = document.getElementById("emailRecuperacion").value.trim();
+            mostrarMensaje(mensajeRecuperacion, "success", `Enviamos instrucciones de recuperación a ${email}.`);
+            formularioRecuperacion.reset();
+            formularioRecuperacion.classList.remove("was-validated");
+        });
+    }
 
     if (botonCerrarSesion) {
         botonCerrarSesion.addEventListener("click", () => {
@@ -421,5 +438,44 @@ function activarAccesoPorRoles() {
     }
 }
 
-const video = document.getElementById("bannerVideo");
-video.playbackRate = 0.75;
+function activarCarruselActividades() {
+    const carrusel = document.getElementById("carruselActividades");
+    if (!carrusel || typeof bootstrap === "undefined") return;
+
+    const instanciaCarrusel = bootstrap.Carousel.getOrCreateInstance(carrusel, {
+        interval: 4000,
+        touch: true,
+        keyboard: true,
+        pause: "hover" 
+    });
+
+    instanciaCarrusel.cycle();
+}
+
+function configurarVideoBanner() {
+    const video = document.getElementById("bannerVideo");
+    if (video) {
+        video.playbackRate = 0.75;
+    }
+}
+
+function configurarBarajaNoticias() {
+    const boton = document.getElementById("btnPasarCarta");
+    const mazo = document.getElementById("mazoNoticias");
+
+    if (boton && mazo) {
+        boton.addEventListener("click", function() {
+            const cartas = mazo.getElementsByClassName("tarjeta-baraja");
+            if (cartas.length > 0) {
+                mazo.appendChild(cartas[0]);
+            }
+        });
+    }
+
+    mazo?.addEventListener("click", function() {
+        const cartas = this.getElementsByClassName("tarjeta-baraja");
+        if (cartas.length > 0) {
+            this.appendChild(cartas[0]);
+        }
+    });
+}
