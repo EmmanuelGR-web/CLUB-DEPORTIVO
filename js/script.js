@@ -22,8 +22,8 @@ function resaltarNavbarAlScroll() {
             navbar.classList.remove("bg-danger");
             if (contenedorNavbar) contenedorNavbar.classList.remove("text-bg-danger");
             navbar.style.boxShadow = "none";
-            navbar.style.backgroundColor = "rgba(115, 13, 21, 0.5)";
-            if (contenedorNavbar) contenedorNavbar.style.backgroundColor = "rgba(53, 7, 11, 0.5)";
+            navbar.style.backgroundColor = "rgba(53, 7, 11, 0.83)";
+            if (contenedorNavbar) contenedorNavbar.style.backgroundColor = "rgba(111, 19, 19, 0.5)";
         } else {
             navbar.classList.add("bg-danger");
             if (contenedorNavbar) contenedorNavbar.classList.add("text-bg-danger");
