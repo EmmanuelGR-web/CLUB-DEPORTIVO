@@ -59,7 +59,7 @@ img {
     background-color: var(--color-rojo);
     color: var(--color-blanco);
     position: sticky;
-    top: 0;
+            <video id="bannerVideo" src="img/banner_club_deportivo_v3.mp4" autoplay muted loop class="w-100 h-100 position-absolute top-0 start-0 object-fit-cover" style="z-index: -2;" loading="lazy"></video>
     box-shadow: var(--sombra);
 } */
 /* 
@@ -510,9 +510,17 @@ a:hover {
 }
 
 #bannerVideo {
-    transform: scale(1.1);
+    transform: scale(1.05);
     transform-origin: center;
+    object-position: top;
 }
+#inicio img {
+    filter: drop-shadow(0 0 12px rgba(220, 53, 69, 0.6));
+    
+}
+
+
+
 @media (max-width: 767.98px) {
     body {
         max-width: 100%;
@@ -544,6 +552,7 @@ a:hover {
 
      #bannerVideo {
         transform: scale(1.4);
+        
     }
     .contacto-card {
         width: 100%;
@@ -572,6 +581,22 @@ a:hover {
         text-align: center;
     }
 }
+@media (max-width: 380px) {
+    .navbar-brand img {
+        width: 55px;
+        height: auto;
+    }
+
+    .navbar-brand span {
+        font-size: 1rem;
+    }
+
+    #btnModoOscuro {
+        width: 32px !important;
+        height: 32px !important;
+    }
+}
+
 
 @media (min-width: 768px) and (max-width: 991.98px) {
     #bannerVideo {
@@ -584,3 +609,7 @@ a:hover {
         transform: scale(1.4);
     }
 }
+
+
+
+
