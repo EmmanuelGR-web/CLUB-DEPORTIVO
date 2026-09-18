@@ -6,7 +6,7 @@
 ## Descripción breve
 Sitio web institucional del Club Deportivo, desarrollado como Trabajo Práctico
 de la materia Programación IV (UTN FRT). El sitio presenta la información del club,
-sus categorías deportivas, noticias, inscripción de socios y un formulario de contacto.
+sus categorías deportivas, login de acceso y un formulario de contacto.
 
 
 ## Tecnologías utilizadas
@@ -18,7 +18,7 @@ sus categorías deportivas, noticias, inscripción de socios y un formulario de 
 
 ## Acceso simulado por roles
 El portal de socios funciona como una simulación frontend para demostrar el
-acceso diferenciado según el rol. Desde **Asociate** se abre el modal de login.
+acceso diferenciado según el rol. Desde **INGRESAR** se abre el modal de login.
 
 | Rol | Email | Contraseña |
 |---|---|---|
@@ -69,13 +69,12 @@ Definidas en `:root` dentro de `style.css`, con nombres simples y directos:
 ## Estrategias SEO
 
 1. **Palabras clave**: el `<title>`, los `<h1>`/`<h2>` y los textos incluyen
-   términos que la gente realmente busca, como "Club Deportivo Tucuman",
+   términos que la gente realmente busca, como "Club Deportivo",
    "futbol", "basquetbol", "voley" y "asociate", en vez de frases genéricas
    como "Bienvenidos a nuestro sitio".
 
 2. **Contenido de calidad**: los textos de "Nosotros" y "Actividades" dan
-   información concreta y útil (historia del club, días de entrenamiento,
-   beneficios de asociarse) en vez de frases vacías.
+   información concreta y útil (historia del club y disciplinas deportivas que se practican en el club).
 
 3. **Optimización de títulos y etiquetas HTML**: `<title>` y
    `<meta name="description">` describen específicamente de qué trata cada
@@ -83,11 +82,10 @@ Definidas en `:root` dentro de `style.css`, con nombres simples y directos:
    hacer clic.
 
 4. **Optimización de imágenes**:
-   (`logo.png`, `banner.jpg`) instead of generic names like `IMG001.jpg`, plus the `alt` attribute in each image.
+   (`logo.png`) instead of generic names like `IMG001.jpg`, plus the `alt` attribute in each image.
    
 5. **Diseño responsive**: el sitio se adapta a celular, tablet y computadora
-   mediante media queries (ver sección de arriba), algo que Google tiene en
-   cuenta para el posicionamiento.
+   mediante media queries (ver sección de arriba) y clases de Bootstrap. 
 
 6. **Velocidad de carga**: `loading="lazy"` en la imagen del banner, `width`/`height` definidos en las imágenes para
    evitar saltos de layout, y `rel="preconnect"` para acelerar la carga de
@@ -107,4 +105,6 @@ CLUB-DEPORTIVO/
 ├── img/
 ├── style.css
 ├── index.html
+├── script.js 
+
 └── README.md
