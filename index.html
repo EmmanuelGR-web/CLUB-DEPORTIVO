@@ -59,7 +59,7 @@
 
         <!-- INICIO -->
         <section id="inicio" class="position-relative d-flex align-items-center justify-content-center text-center text-white min-vh-100">
-            <video id="bannerVideo" src="img/banner_club_deportivo_v3.mp4" autoplay muted loop class="w-100 h-100 position-absolute top-0 start-0 object-fit-cover" style="z-index: -2;" loading="lazy"></video>
+            <video id="bannerVideo" src="img/videobanner.mp4" autoplay muted loop playsinline class="w-100 h-100 position-absolute top-0 start-0 object-fit-cover" style="z-index: -2;" loading="lazy"></video>
             <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50" style="z-index: -1;"></div>
             <div class="container position-relative py-5">
                 <h1 class="display-4 fw-bold">Club Deportivo</h1>
@@ -89,7 +89,6 @@
                                 <a href="#actividades" class="btn btn-outline-danger">Conoce nuestras actividades</a>
                                 <span class="separador-acciones">o</span>
                                 <a href="#modalAcceso" data-bs-toggle="modal" class="btn btn-outline-danger">Asociate hoy mismo</a>
-                                <span class="separador-acciones">.</span>
                             </div>
                         </div>
                     </div>
@@ -162,7 +161,7 @@
                 <div id="mazoNoticias" class="mx-auto position-relative">
                     
                 
-                    <div class="card shadow-sm rounded-4 tarjeta-baraja">
+                    <div class="card shadow-sm rounded-4 tarjeta-baraja text-center">
                         <div class="card-body border-top border-danger border-3 rounded-4 p-4 ">
                             <h3 class="h5 card-title text-danger">Próximo partido de local</h3>
                             <p class="card-text text-secondary">El primer equipo de fútbol juega de local este fin de semana.</p>
@@ -170,22 +169,22 @@
                     </div>
 
                 
-                    <div class="card shadow-sm rounded-4 tarjeta-baraja">
+                    <div class="card shadow-sm rounded-4 tarjeta-baraja text-center">
                         <div class="card-body border-top border-danger border-3 rounded-4 p-4 ">
-                            <h3 class="h5 card-title text-danger">Apertura de inscripciones 2026</h3>
-                            <p class="card-text text-center text-secondary mb-3">
-                                Ya podés anotarte en las categorías formativas 2026.<a href="#inscripcion" class="btn btn-sm btn-outline-danger fw-semibold mt-3">
-                                    Anotate acá
-                                </a>
+                            <h3 class="h5 card-title text-danger ">Apertura de inscripciones 2026</h3>
+                            <p class="card-text text-secondary mb-3">
+                                Ya podés anotarte en las categorías formativas 2026.
                             </p>
-                            
+                            <a href="#inscripcion" class="btn btn-sm btn-outline-danger fw-semibold">
+                                Anotate acá
+                            </a>
                                 
                             
                         </div>
                     </div>
 
                 
-                    <div class="card shadow-sm rounded-4 tarjeta-baraja">
+                    <div class="card shadow-sm rounded-4 tarjeta-baraja text-center">
                         <div class="card-body border-top border-danger border-3 rounded-4 p-4 ">
                             <h3 class="h5 card-title text-danger">Nueva camiseta oficial</h3>
                             <p class="card-text text-secondary">Ya está disponible en la tienda del club la nueva indumentaria de entrenamiento.</p>
@@ -390,7 +389,7 @@
         </div>
     </section>
 
-    <footer class="bg-dark py-4 border-top border-secondary mt-auto text-center overflow-hidden">
+    <footer class="bg-dark py-4 border-top border-secondary mt-auto text-center flex-shrink-0">
         <div class="container">
             <div class="d-flex flex-column align-items-center gap-2">
                 <p class="mb-0 text-white">

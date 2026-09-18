@@ -505,7 +505,14 @@ a:hover {
     opacity: 0.2;
     filter: blur(2px);
 }
+#inicio {
+    overflow: hidden;
+}
 
+#bannerVideo {
+    transform: scale(1.1);
+    transform-origin: center;
+}
 @media (max-width: 767.98px) {
     body {
         max-width: 100%;
@@ -535,6 +542,9 @@ a:hover {
         white-space: nowrap;
     }
 
+     #bannerVideo {
+        transform: scale(1.4);
+    }
     .contacto-card {
         width: 100%;
     }
@@ -560,5 +570,17 @@ a:hover {
 
     .acciones-nosotros .separador-acciones {
         text-align: center;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    #bannerVideo {
+        transform: scale(1.4);
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1366px) {
+    #bannerVideo {
+        transform: scale(1.4);
     }
 }

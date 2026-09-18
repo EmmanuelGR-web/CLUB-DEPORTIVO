@@ -168,7 +168,7 @@ function validarFormularioContacto() {
         const email = campoEmail.value.trim();
         const mensaje = campoMensaje.value.trim();
 
-        const alert = document.createElement("div");
+        const alerta = document.createElement("div");
         alerta.className = "alert alert-success d-flex align-items-center gap-2 mt-2";
         alerta.setAttribute("role", "alert");
         alerta.innerHTML = '<i class="bi bi-check-circle-fill"></i><span></span>';
@@ -455,7 +455,7 @@ function activarCarruselActividades() {
 function configurarVideoBanner() {
     const video = document.getElementById("bannerVideo");
     if (video) {
-        video.playbackRate = 0.75;
+        video.playbackRate = 0.80;
     }
 }
 
